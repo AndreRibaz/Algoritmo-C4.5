@@ -1,3 +1,5 @@
+--- By: Bruno Tenório Ávila
+--- Acesse: https://agade.ufpe.br/agade_mineracao.php
 
 --------------------------------------
 --  Esquema, linguagem e extensões  --
@@ -88,56 +90,16 @@ CREATE TABLE IF NOT EXISTS kdd.transacoes
         ON UPDATE RESTRICT ON DELETE RESTRICT
 );
 
-CREATE TABLE IF NOT EXISTS kdd.regras
-(
-	id_processo integer NOT NULL,
-    id_regra integer NOT NULL,
-    antecedentes kdd.apriori_itemset[] NOT NULL,
-    consequentes kdd.apriori_itemset[] NOT NULL,
-    nomes_antecedentes character varying NOT NULL,
-    nomes_consequentes character varying NOT NULL,
-    k integer NOT NULL,
-    confianca numeric(5,3) NOT NULL,
-    suporte numeric(5,3) NOT NULL,
-	lift numeric(5,3) NOT NULL,
-    leverage numeric(5,3) NOT NULL,
-    registros integer NOT NULL,
-    redundante boolean NOT NULL,
-    CONSTRAINT pk_regras PRIMARY KEY (id_processo, id_regra),
-    CONSTRAINT fk_regras_id_processo FOREIGN KEY (id_processo)
-        REFERENCES kdd.processos (id_processo) MATCH SIMPLE
-        ON UPDATE RESTRICT ON DELETE RESTRICT
-);
+CREATE TABLE IF NOT EXISTS kdd.regras ( 
+    id_regra serial primary key,
+    id_processo integer not null,
+    antecedente text not null, 
+    consequente text not null, 
+    confianca float not null, 
+    suporte float not null, 
+    lift float not null );  
+;
 
-CREATE TABLE IF NOT EXISTS kdd.textos
-(
-    id_processo integer NOT NULL,
-    id_atributo integer NOT NULL,
-	id_texto integer NOT NULL,
-    texto text NOT NULL,
-    CONSTRAINT pk_textos PRIMARY KEY (id_processo, id_atributo, id_texto),
-    CONSTRAINT fk_textos_id_processo FOREIGN KEY (id_processo)
-        REFERENCES kdd.processos (id_processo) MATCH SIMPLE
-        ON UPDATE RESTRICT ON DELETE RESTRICT
-);
-
-CREATE TABLE IF NOT EXISTS kdd.regressoes
-(
-    id_processo integer NOT NULL,
-    id_regressao integer NOT NULL,
-    atributo_independente character varying(200) NOT NULL,
-    atributo_dependente character varying(200) NOT NULL,
-	equacao character varying(200) NOT NULL,
-    m numeric NOT NULL,
-    n numeric NOT NULL,
-    r2 numeric NOT NULL,
-    rmse numeric NOT NULL,
-    registros integer NOT NULL,
-    CONSTRAINT pk_regressoes PRIMARY KEY (id_processo, id_regressao),
-    CONSTRAINT fk_regressoes_id_processo FOREIGN KEY (id_processo)
-        REFERENCES kdd.processos (id_processo) MATCH SIMPLE
-        ON UPDATE RESTRICT ON DELETE RESTRICT
-);
 
 CREATE TABLE IF NOT EXISTS kdd.arvore_decisao
 (
