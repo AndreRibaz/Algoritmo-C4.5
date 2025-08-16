@@ -1,4 +1,4 @@
---- By: Bruno Tenório Ávila
+--- Colaborador: Bruno Tenório Ávila
 --- Acesse: https://agade.ufpe.br/agade_mineracao.php
 
 --------------------------------------
